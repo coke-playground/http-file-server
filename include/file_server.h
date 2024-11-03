@@ -4,7 +4,7 @@
 #include <string>
 #include <cstdint>
 
-#include "coke/http_server.h"
+#include "coke/http/http_server.h"
 
 struct FileServerParams {
     std::size_t min_size_hint{256 * 1024};

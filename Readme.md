@@ -2,7 +2,7 @@
 
 本项目是一个基于[coke](https://github.com/kedixa/coke)实现的`Http`文件服务器。
 
-`Workflow`目前(`v0.11.4`)暂未支持异步回复数据流的方式，但可以通过`server_task->push`以伪异步的方式实现该模式，例如可实现`Http Server-Sent Events`。本项目是`coke`框架实现服务器的一个示例，也是`workflow`使用`SSE`模式的一个示例，项目中没有引入晦涩的操作，因此非常适合初学者了解`coke`。
+`Workflow`目前(`v0.11.6`)暂未支持异步回复数据流的方式，但可以通过`server_task->push`以伪异步的方式实现该模式，例如可实现`Http Server-Sent Events`。本项目是`coke`框架实现服务器的一个示例，也是`workflow`使用`SSE`模式的一个示例，项目中没有引入晦涩的操作，因此非常适合初学者了解`coke`。
 
 
 ## 待办清单
