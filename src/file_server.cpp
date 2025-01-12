@@ -12,7 +12,7 @@
 #include "coke/fileio.h"
 #include "coke/sleep.h"
 
-#include "log/log.h"
+#include "klog/klog.h"
 #include "workflow/HttpUtil.h"
 
 namespace fs = std::filesystem;
@@ -162,7 +162,7 @@ coke::Task<> HttpFileServer::process(coke::HttpServerContext ctx) {
         }
     }
     catch (const std::exception &e) {
-        LOG_ERROR("Exception method:{} what:{}", method, e.what());
+        KLOG_ERROR("Exception method:{} what:{}", method, e.what());
     }
 }
 
@@ -242,8 +242,8 @@ coke::Task<> HttpFileServer::handle_get(coke::HttpServerContext &ctx) {
             reply_error = co_await reply_buf(task, buf, (std::size_t)res.nbytes);
             offset += res.nbytes;
 
-            LOG_INFO("PartialReply path:{} total:{} offset:{} reply_error:{}",
-                     path.string(), filesize, offset, reply_error);
+            KLOG_INFO("PartialReply path:{} total:{} offset:{} reply_error:{}",
+                      path.string(), filesize, offset, reply_error);
 
             /// what if offset > filesize
         }
@@ -257,8 +257,8 @@ coke::Task<> HttpFileServer::handle_get(coke::HttpServerContext &ctx) {
             http_status = 200;
         }
 
-        LOG_INFO("method:{} path:{} status:{} file_error:{} reply_error:{} cost:{} reply:{}",
-                 "get", path.string(), http_status, file_error, reply_error, cost, reply_cost);
+        KLOG_INFO("method:{} path:{} status:{} file_error:{} reply_error:{} cost:{} reply:{}",
+                  "get", path.string(), http_status, file_error, reply_error, cost, reply_cost);
     }
 
     if (need_reply) {
@@ -267,8 +267,8 @@ coke::Task<> HttpFileServer::handle_get(coke::HttpServerContext &ctx) {
         auto res = co_await ctx.reply();
         int64_t reply_cost = current_steady_usec() - start - cost;
 
-        LOG_INFO("method:{} path:{} status:{} file_error:{} reply_error:{} cost:{} reply:{}",
-                 "get", path.string(), http_status, file_error, res.error, cost, reply_cost);
+        KLOG_INFO("method:{} path:{} status:{} file_error:{} reply_error:{} cost:{} reply:{}",
+                  "get", path.string(), http_status, file_error, res.error, cost, reply_cost);
     }
 
     co_return;
@@ -289,7 +289,7 @@ coke::Task<> HttpFileServer::handle_head(coke::HttpServerContext &ctx) {
     auto res = co_await ctx.reply();
     int64_t reply_cost = current_steady_usec() - start - cost;
 
-    LOG_INFO("method:{} path:{} status:{} file_error:{} reply_error:{} cost:{} reply:{}",
+    KLOG_INFO("method:{} path:{} status:{} file_error:{} reply_error:{} cost:{} reply:{}",
               "head", path.string(), http_status, 0, res.error, cost, reply_cost);
     co_return;
 }
@@ -306,8 +306,8 @@ coke::Task<> HttpFileServer::handle_other(coke::HttpServerContext &ctx,
     auto res = co_await ctx.reply();
     int64_t reply_cost = current_steady_usec() - start - cost;
 
-    LOG_INFO("method:{} path:{} status:{} reply_error:{} cost:{} reply:{}",
-             method, path.string(), 405, res.error, cost, reply_cost);
+    KLOG_INFO("method:{} path:{} status:{} reply_error:{} cost:{} reply:{}",
+              method, path.string(), 405, res.error, cost, reply_cost);
 
     co_return;
 }

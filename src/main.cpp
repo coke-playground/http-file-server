@@ -5,7 +5,7 @@
 #include "coke/tools/option_parser.h"
 
 #include "file_server.h"
-#include "log/log.h"
+#include "klog/klog.h"
 
 std::atomic<bool> run_flag{true};
 
@@ -44,21 +44,21 @@ int main(int argc, char *argv[]) {
     signal(SIGINT, sighandler);
 
     if (server.start(port) == 0) {
-        LOG_INFO("FileServerStart port:{} root:{}", port, file_server_params.root);
+        KLOG_INFO("FileServerStart port:{} root:{}", port, file_server_params.root);
 
         run_flag.wait(true, std::memory_order_relaxed);
 
-        LOG_INFO("FileServerStop shutdown server");
+        KLOG_INFO("FileServerStop shutdown server");
         server.shutdown();
 
-        LOG_INFO("FileServerStop wait finish");
+        KLOG_INFO("FileServerStop wait finish");
         server.wait_finish();
 
-        LOG_INFO("FileServerStop done");
+        KLOG_INFO("FileServerStop done");
         return 0;
     }
     else {
-        LOG_INFO("FileServerStartFailed port:{} errno:{}", port, (int)errno);
+        KLOG_INFO("FileServerStartFailed port:{} errno:{}", port, (int)errno);
         return 1;
     }
 }

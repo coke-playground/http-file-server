@@ -10,7 +10,7 @@ cc_library(
     ],
     includes = ["include"],
     deps = [
-        "@common//:log",
+        "@klog//:klog",
         "@coke//:http",
     ]
 )
@@ -20,7 +20,7 @@ cc_binary(
     srcs = ["src/main.cpp"],
     deps = [
         "//:file_server",
-        "@common//:log",
+        "@klog//:klog",
         "@coke//:tools",
     ]
 )
